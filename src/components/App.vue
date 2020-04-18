@@ -24,8 +24,8 @@
                 class="kiwi-workspace"
                 @click="stateBrowserDrawOpen = false"
             >
-                <div class="kiwi-workspace-background" />
 
+                <div class="kiwi-workspace-background" />
                 <template v-if="!activeComponent && network">
                     <container
                         :network="network"
@@ -72,6 +72,7 @@ import startupZncLogin from '@/components/startups/ZncLogin';
 import startupCustomServer from '@/components/startups/CustomServer';
 import startupKiwiBnc from '@/components/startups/KiwiBnc';
 import startupPersonal from '@/components/startups/Personal';
+import startupAgl from '@/components/startups/Agl';
 import StateBrowser from '@/components/StateBrowser';
 import AppSettings from '@/components/AppSettings';
 import Container from '@/components/Container';
@@ -144,6 +145,7 @@ export default {
             kiwiBnc: startupKiwiBnc,
             znc: startupZncLogin,
             personal: startupPersonal,
+            agl: startupAgl,
         };
         let extraStartupScreens = this.$state.getStartups();
 
