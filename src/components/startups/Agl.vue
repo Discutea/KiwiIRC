@@ -44,6 +44,29 @@
                     />
                 </div>
 
+                <input
+                    v-model="age"
+                    class="kiwi-welcome-simple-age"
+                    :label="$t('age')"
+                    type="number"
+                />
+                <input
+                    id="gender_m"
+                    v-model="gender"
+                    type="radio"
+                    value="M"
+                >
+                <label for="gender_m">Homme</label>
+                <input id="gender_f" v-model="gender" type="radio" value="F">
+                <label for="gender_f">Femme</label>
+                <input id="gender_u" v-model="gender" type="radio" value="U" checked="checked">
+                <label for="gender_u">Autre</label>
+                <input-text
+                    v-model="location"
+                    class="kiwi-welcome-simple-location"
+                    :label="$t('location')"
+                />
+
                 <div v-if="showChannel" class="kiwi-welcome-simple-input-container">
                     <input-text
                         v-model="channel"
@@ -96,6 +119,9 @@ export default {
             channel: '',
             nick: '',
             password: '',
+            age: null,
+            gender: null,
+            location: null,
             showChannel: true,
             showPass: true,
             toggablePass: true,
@@ -284,7 +310,7 @@ export default {
                 encoding: _.trim(options.encoding),
                 direct: !!options.direct,
                 path: options.direct_path || '',
-                gecos: options.gecos,
+                gecos: this.age + ' ' + this.gender + ' ' + this.location,
             });
 
             // Clear the server buffer in case it already existed and contains messages relating to
