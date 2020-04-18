@@ -20,6 +20,11 @@
                 >
                     <channel-list :network="network" />
                 </tabbed-tab>
+
+                <tabbed-tab :header="$t('users')" v-if="network.state==='connected'" name="users">
+                    <user-list :network="network"></user-list>
+                </tabbed-tab>
+
                 <tabbed-tab v-for="item in pluginUiElements" :key="item.id" :header="item.title">
                     <div :is="item.component" v-bind="item.props" />
                 </tabbed-tab>
@@ -35,12 +40,14 @@ import GlobalApi from '@/libs/GlobalApi';
 import MessageList from './MessageList';
 import NetworkSettings from './NetworkSettings';
 import ChannelList from './ChannelList';
+import UserList from './UserList';
 
 export default {
     components: {
         MessageList,
         NetworkSettings,
         ChannelList,
+        UserList
     },
     props: ['network'],
     data: function data() {
