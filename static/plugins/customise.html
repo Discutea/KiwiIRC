@@ -3,8 +3,37 @@
 </style>
 
 <script>
-kiwi.plugin('customise', function(kiwi, log) {
-    // Add your customisations here
-    // Some small examples can be found at https://github.com/kiwiirc/kiwiirc/wiki/Plugin-Examples
-});
+    kiwi.on('irc.userlist', function(event, network) {
+        event.users.forEach(function(user) {
+            kiwi.state.addUser(network.id, {nick: user.nick, avatar: {
+                    small: "https://greatchat.fr/avatars/59c41ce10f925.jpg",
+            }});
+        });
+    });
+
+    kiwi.on('irc.join', (event, network) => {
+        setColour(event,  network);
+    });
+
+    kiwi.on('irc.wholist', (event, network) => {
+        event.users.forEach(user => {
+            setColour(user,  network);
+        });
+
+    });
+
+    const setColour = (user, network) => {
+        const realname = user.gecos || user.real_name;
+        const gender = realname.split(' ')[1];
+        let colour = "grey";
+
+        if (/^[mMHh]$/.test(gender)) {
+            colour = 'blue';
+        }
+        if (/^[fF]$/.test(gender)) {
+            colour = 'deeppink';
+        }
+
+        kiwi.state.addUser(network.id, {nick: user.nick, colour: colour});
+    }
 </script>
