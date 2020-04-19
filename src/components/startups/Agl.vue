@@ -119,9 +119,9 @@ export default {
             channel: '',
             nick: '',
             password: '',
-            age: null,
-            gender: null,
-            location: null,
+            age: '',
+            gender: '',
+            location: '',
             showChannel: true,
             showPass: true,
             toggablePass: true,
@@ -217,6 +217,16 @@ export default {
             previousNet = state.getNetworkFromAddress(options.server.trim());
         }
 
+        // /?nick=fffff&location=sdqqsdqs&gender=U&age=23&channel=#lkjlkj
+        if (Misc.queryStringVal('location')) {
+            this.location = Misc.queryStringVal('location');
+        }
+        if (Misc.queryStringVal('gender')) {
+            this.gender = Misc.queryStringVal('gender');
+        }
+        if (Misc.queryStringVal('age')) {
+            this.age = Misc.queryStringVal('age');
+        }
         if (Misc.queryStringVal('nick')) {
             this.nick = Misc.queryStringVal('nick');
         } else if (previousNet && previousNet.connection.nick) {
@@ -253,7 +263,12 @@ export default {
             bouncer.enable(options.server, options.port, options.tls, options.direct, options.path);
         }
 
-        if (options.autoConnect && this.nick && (this.channel || this.connectWithoutChannel)) {
+        if (options.autoConnect &&
+                this.gender &&
+                this.location &&
+                this.age &&
+                this.nick &&
+                (this.channel || this.connectWithoutChannel)) {
             this.startUp();
         }
     },
